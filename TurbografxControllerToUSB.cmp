@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (22-Jun-2014 BZR 4027)-stable date = dim 03 aoû 2014 22:46:10 EDT
+Cmp-Mod V01 Created by CvPcb (22-Jun-2014 BZR 4027)-stable date = mar 05 aoû 2014 10:29:34 EDT
 
 BeginCmp
 TimeStamp = /53DC159B;
@@ -50,10 +50,10 @@ IdModule  = USB_B;
 EndCmp
 
 BeginCmp
-TimeStamp = /53DEED88;
+TimeStamp = /53E0D96A;
 Reference = J2;
-ValeurCmp = DB9;
-IdModule  = DB9FC;
+ValeurCmp = DIN8;
+IdModule  = DIN-8-FEMALE;
 EndCmp
 
 BeginCmp

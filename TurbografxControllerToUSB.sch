@@ -36,7 +36,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title ""
-Date "4 aug 2014"
+Date "5 aug 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -311,43 +311,37 @@ SCK
 $Comp
 L GND #PWR09
 U 1 1 53DC1F3B
-P 9600 2400
-F 0 "#PWR09" H 9600 2400 30  0001 C CNN
-F 1 "GND" H 9600 2330 30  0001 C CNN
-F 2 "" H 9600 2400 60  0000 C CNN
-F 3 "" H 9600 2400 60  0000 C CNN
-	1    9600 2400
+P 9550 1150
+F 0 "#PWR09" H 9550 1150 30  0001 C CNN
+F 1 "GND" H 9550 1080 30  0001 C CNN
+F 2 "" H 9550 1150 60  0000 C CNN
+F 3 "" H 9550 1150 60  0000 C CNN
+	1    9550 1150
 	1    0    0    -1  
 $EndComp
-Text GLabel 8700 1800 0    60   Input ~ 0
-SELECT_CLK
-Text GLabel 8700 1400 0    60   Input ~ 0
-B_A_BUTTON
-Text GLabel 9450 1500 0    60   Input ~ 0
-RIGHT_MODE
-Text GLabel 9450 1900 0    60   Input ~ 0
-DOWN_Y
+Text GLabel 9700 1400 2    60   Input ~ 0
+DATA_SELECT
+Text GLabel 8150 1600 0    60   Input ~ 0
+RIGHT_II_BUTTON
+Text GLabel 9600 1750 2    60   Input ~ 0
+DOWN_SELECT_BUTTON
 $Comp
 L VCC #PWR010
 U 1 1 53DC1FB2
-P 9600 1100
-F 0 "#PWR010" H 9600 1200 30  0001 C CNN
-F 1 "VCC" H 9600 1200 30  0000 C CNN
-F 2 "" H 9600 1100 60  0000 C CNN
-F 3 "" H 9600 1100 60  0000 C CNN
-	1    9600 1100
+P 9650 1600
+F 0 "#PWR010" H 9650 1700 30  0001 C CNN
+F 1 "VCC" H 9650 1700 30  0000 C CNN
+F 2 "" H 9650 1600 60  0000 C CNN
+F 3 "" H 9650 1600 60  0000 C CNN
+	1    9650 1600
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	9600 1100 9600 1300
-Wire Wire Line
-	9600 1300 9700 1300
-Text GLabel 8700 2000 0    60   Input ~ 0
-C_START_BUTTON
-Text GLabel 9450 1700 0    60   Input ~ 0
-LEFT_X
-Text GLabel 9450 2100 0    60   Input ~ 0
-UP_Z
+Text GLabel 8350 1400 0    60   Input ~ 0
+~OE~
+Text GLabel 8150 1750 0    60   Input ~ 0
+LEFT_RUN_BUTTON
+Text GLabel 8150 1900 0    60   Input ~ 0
+UP_I_BUTTON
 Text GLabel 4250 4800 0    60   Input ~ 0
 RESET
 Wire Wire Line
@@ -445,67 +439,91 @@ F 3 "" H 3950 2600 60  0000 C CNN
 	1    3950 2600
 	1    0    0    -1  
 $EndComp
-$Comp
-L DB9 J2
-U 1 1 53DEED88
-P 10150 1700
-F 0 "J2" H 10150 2250 70  0000 C CNN
-F 1 "DB9" H 10150 1150 70  0000 C CNN
-F 2 "" H 10150 1700 60  0000 C CNN
-F 3 "" H 10150 1700 60  0000 C CNN
-	1    10150 1700
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9700 1600 9600 1600
-Wire Wire Line
-	9600 1600 9600 2400
-Wire Wire Line
-	8700 1400 9700 1400
-Wire Wire Line
-	9450 1500 9700 1500
-Wire Wire Line
-	9450 1700 9700 1700
-Wire Wire Line
-	8700 1800 9700 1800
-Wire Wire Line
-	9450 1900 9700 1900
-Wire Wire Line
-	8700 2000 9700 2000
-Wire Wire Line
-	9450 2100 9700 2100
-Text GLabel 7000 4800 2    60   Input ~ 0
-B_A_BUTTON
-Text GLabel 7700 4900 2    60   Input ~ 0
-RIGHT_MODE
-Text GLabel 7000 5000 2    60   Input ~ 0
-LEFT_X
-Text GLabel 7700 5100 2    60   Input ~ 0
-SELECT_CLK
-Text GLabel 7000 5200 2    60   Input ~ 0
-DOWN_Y
-Text GLabel 7700 5300 2    60   Input ~ 0
-C_START_BUTTON
-Text GLabel 7000 5400 2    60   Input ~ 0
-UP_Z
-Wire Wire Line
-	6700 4800 7000 4800
-Wire Wire Line
-	6700 4900 7700 4900
-Wire Wire Line
-	6700 5000 7000 5000
-Wire Wire Line
-	6700 5100 7700 5100
-Wire Wire Line
-	6700 5200 7000 5200
-Wire Wire Line
-	6700 5300 7700 5300
-Wire Wire Line
-	6700 5400 7000 5400
 NoConn ~ 6700 5500
 NoConn ~ 6700 4150
 NoConn ~ 6700 3750
 NoConn ~ 6700 3650
 NoConn ~ 6700 3550
 NoConn ~ 6700 3150
+$Comp
+L GND #PWR014
+U 1 1 53E0D3E1
+P 9350 1950
+F 0 "#PWR014" H 9350 1950 30  0001 C CNN
+F 1 "GND" H 9350 1880 30  0001 C CNN
+F 2 "" H 9350 1950 60  0000 C CNN
+F 3 "" H 9350 1950 60  0000 C CNN
+	1    9350 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L DIN8 J2
+U 1 1 53E0D96A
+P 8950 1550
+F 0 "J2" H 8950 1800 60  0000 C CNN
+F 1 "DIN8" H 8950 1100 60  0000 C CNN
+F 2 "~" H 8950 1550 60  0000 C CNN
+F 3 "~" H 8950 1550 60  0000 C CNN
+	1    8950 1550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8350 1400 8450 1400
+Wire Wire Line
+	8150 1600 8400 1600
+Wire Wire Line
+	9350 1300 9350 1100
+Wire Wire Line
+	9350 1100 9550 1100
+Wire Wire Line
+	9550 1100 9550 1150
+Wire Wire Line
+	9450 1400 9700 1400
+Wire Wire Line
+	9500 1600 9650 1600
+Wire Wire Line
+	9450 1700 9600 1700
+Wire Wire Line
+	9600 1700 9600 1750
+Wire Wire Line
+	9250 1850 9350 1850
+Wire Wire Line
+	9350 1850 9350 1950
+Wire Wire Line
+	8150 1750 8300 1750
+Wire Wire Line
+	8300 1750 8300 1700
+Wire Wire Line
+	8300 1700 8450 1700
+Wire Wire Line
+	8150 1900 8450 1900
+Wire Wire Line
+	8450 1900 8450 1800
+Wire Wire Line
+	8450 1800 8650 1800
+Text GLabel 7000 4800 2    60   Input ~ 0
+~OE~
+Text GLabel 7900 4900 2    60   Input ~ 0
+RIGHT_II_BUTTON
+Text GLabel 7000 5000 2    60   Input ~ 0
+LEFT_RUN_BUTTON
+Text GLabel 7900 5100 2    60   Input ~ 0
+UP_I_BUTTON
+Text GLabel 7900 5300 2    60   Input ~ 0
+DATA_SELECT
+Text GLabel 7000 5200 2    60   Input ~ 0
+DOWN_SELECT_BUTTON
+Wire Wire Line
+	6700 4800 7000 4800
+Wire Wire Line
+	6700 5000 7000 5000
+Wire Wire Line
+	6700 5200 7000 5200
+NoConn ~ 6700 5400
+Wire Wire Line
+	6700 4900 7900 4900
+Wire Wire Line
+	6700 5100 7900 5100
+Wire Wire Line
+	6700 5300 7900 5300
 $EndSCHEMATC
