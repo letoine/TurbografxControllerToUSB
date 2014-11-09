@@ -2,7 +2,6 @@
 #define _JOYSTICK_H_
 
 #include <avr/io.h>
-#include <avr/io.h>
 #include <avr/wdt.h>
 #include <avr/power.h>
 #include <avr/interrupt.h>
@@ -35,7 +34,7 @@ typedef struct {
       unsigned int pad1:2;
       
       unsigned int home:1;
-      unsigned int pad2:3;      
+      unsigned int pad2:3;
     };
   } button;
 } USB_JoystickReport_Data_t;
