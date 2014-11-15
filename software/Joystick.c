@@ -36,44 +36,60 @@ USB_ClassInfo_HID_Device_t Joystick_HID_Interface = {
   },
 };
 
-#define OUTPUT_ENABLE_PIN	4
+#define IO_PIN	PIND
+#define IO_PORT	PORTD
+#define IO_DDR	DDRD
+
+#define OUTPUT_ENABLE_PIN	0
+
+#define DATA1_PIN		1
+#define DATA3_PIN		2
+#define DATA0_PIN		3
+#define DATA2_PIN		4
+
 #define SELECT_PIN		5
 
-#define PORTB_INPUTS_MASK	0x0F
-#define PORTB_OUTPUTS_MASK	((1<<OUTPUT_ENABLE_PIN)|(1<<SELECT_PIN))
+#define INPUT_PINS_MASK	(_BV(DATA0_PIN)|_BV(DATA1_PIN)|_BV(DATA2_PIN)|_BV(DATA3_PIN))
+#define OUTPUT_PINS_MASK	(_BV(OUTPUT_ENABLE_PIN)|_BV(SELECT_PIN))
 
-#define enable_controller_chip()	(PORTB &= ~(_BV(OUTPUT_ENABLE_PIN)))
-#define disable_controller_chip()	(PORTB |= _BV(OUTPUT_ENABLE_PIN))
-#define set_select_to_high()		(PORTB |= _BV(SELECT_PIN))
-#define set_select_to_low()		(PORTB &= ~(_BV(SELECT_PIN)))
+#define enable_controller_chip()	(IO_PORT &= ~(_BV(OUTPUT_ENABLE_PIN)))
+#define disable_controller_chip()	(IO_PORT |= _BV(OUTPUT_ENABLE_PIN))
+#define set_select_to_high()		(IO_PORT |= _BV(SELECT_PIN))
+#define set_select_to_low()		(IO_PORT &= ~(_BV(SELECT_PIN)))
 
 typedef union {
   uint8_t raw;
   struct {
-    unsigned int up:1;
-    unsigned int right:1;
-    unsigned int down:1;
-    unsigned int left:1;
+    unsigned int pad1:1;
     
-    unsigned int pad:4;
+    unsigned int right:1;
+    unsigned int left:1;
+    unsigned int up:1;
+    unsigned int down:1;
+    
+    unsigned int pad2:3;
   } directions;
   struct {
-    unsigned int I_btn:1;
-    unsigned int II_btn:1;
-    unsigned int select:1;
-    unsigned int run:1;
+    unsigned int pad1:1;
     
-    unsigned int pad:4;
+    unsigned int II_btn:1;
+    unsigned int run:1;
+    unsigned int I_btn:1;
+    unsigned int select:1;
+    
+    unsigned int pad2:3;
   } btn1;
   struct {
-    unsigned int III_btn:1;
-    unsigned int IV_btn:1;
-    unsigned int V_btn:1;
-    unsigned int VI_btn:1;
+    unsigned int pad1:1;
     
-    unsigned int pad:4;
+    unsigned int IV_btn:1;
+    unsigned int VI_btn:1;
+    unsigned int III_btn:1;
+    unsigned int V_btn:1;
+    
+    unsigned int pad2:3;
   } btn2;
-} portb_defs;
+} input_defs;
 
 int main(void) {
   SetupHardware();
@@ -97,10 +113,10 @@ void SetupHardware(void) {
   
   /* Hardware Initialization */
   /* Set outputs to 1, other to 0 */
-  DDRB = PORTB_OUTPUTS_MASK;
+  IO_DDR = OUTPUT_PINS_MASK;
   
   /* Set pullup resistors on input pins */
-  PORTB = (PORTB|PORTB_INPUTS_MASK);
+  IO_PORT = (IO_PORT|INPUT_PINS_MASK);
   
   SerialDebug_init();
   USB_Init();
@@ -127,66 +143,66 @@ void EVENT_USB_Device_StartOfFrame(void) {
 }
 
 /* if all directions are pressed (0), it is not a direction information */
-inline bool is_direction(portb_defs bport) {
-  return (bport.directions.up|
-	  bport.directions.down|
-	  bport.directions.left|
-	  bport.directions.right);
+inline bool is_direction(input_defs inputs) {
+  return (inputs.directions.up|
+	  inputs.directions.down|
+	  inputs.directions.left|
+	  inputs.directions.right);
 }
 
-inline void SetDirections(USB_JoystickReport_Data_t* JoystickReport, portb_defs bport) {
-    if (!bport.directions.up)
+inline void SetDirections(USB_JoystickReport_Data_t* JoystickReport, input_defs inputs) {
+    if (!inputs.directions.up)
     JoystickReport->Y = -127;
-  else if (!bport.directions.down)
+  else if (!inputs.directions.down)
     JoystickReport->Y =  127;
   
-  if (!bport.directions.left)
+  if (!inputs.directions.left)
     JoystickReport->X = -127;
-  else if (!bport.directions.right)
+  else if (!inputs.directions.right)
     JoystickReport->X =  127;
 }
 
-inline void SetButtons1(USB_JoystickReport_Data_t* JoystickReport, portb_defs bport) {
-  if (!bport.btn1.I_btn)
+inline void SetButtons1(USB_JoystickReport_Data_t* JoystickReport, input_defs inputs) {
+  if (!inputs.btn1.I_btn)
     JoystickReport->button.square = 1;
   
-  if (!bport.btn1.II_btn)
+  if (!inputs.btn1.II_btn)
     JoystickReport->button.cross = 1;
   
-  if (!bport.btn1.select)
+  if (!inputs.btn1.select)
     JoystickReport->button.select = 1;
   
-  if (!bport.btn1.run)
+  if (!inputs.btn1.run)
     JoystickReport->button.start = 1;
 }
 
-inline void SetButtons2(USB_JoystickReport_Data_t* JoystickReport, portb_defs bport) {
-  if (!bport.btn2.III_btn)
+inline void SetButtons2(USB_JoystickReport_Data_t* JoystickReport, input_defs inputs) {
+  if (!inputs.btn2.III_btn)
     JoystickReport->button.circle = 1;
   
-  if (!bport.btn2.IV_btn)
+  if (!inputs.btn2.IV_btn)
     JoystickReport->button.triangle = 1;
   
-  if (!bport.btn2.V_btn)
+  if (!inputs.btn2.V_btn)
     JoystickReport->button.l1 = 1;
   
-  if (!bport.btn2.VI_btn)
+  if (!inputs.btn2.VI_btn)
     JoystickReport->button.r1 = 1;
 }
 
 inline void ReadController(USB_JoystickReport_Data_t* JoystickReport) {
-  portb_defs bport;
-  bport.raw = PINB;
+  input_defs inputs;
+  inputs.raw = IO_PIN;
   set_select_to_low();
-  if (is_direction(bport)) {
-    SetDirections(JoystickReport, bport);
-    bport.raw = PINB;
+  if (is_direction(inputs)) {
+    SetDirections(JoystickReport, inputs);
+    inputs.raw = IO_PIN;
     set_select_to_high();
-    SetButtons1(JoystickReport, bport);
+    SetButtons1(JoystickReport, inputs);
   } else {
-    bport.raw = PINB;
+    inputs.raw = IO_PIN;
     set_select_to_high();
-    SetButtons2(JoystickReport, bport);
+    SetButtons2(JoystickReport, inputs);
   }
 }
 

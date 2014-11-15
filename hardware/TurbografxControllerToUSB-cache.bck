@@ -1,8 +1,0 @@
-EESchema-DOCLIB  Version 2.0  Date: mar 05 aoû 2014 08:56:03 EDT
-#
-$CMP AVR-ISP6
-D Standard IDC6 Male Connector, ATMEL ISP 6pin
-K IDC6 Male Connector
-$ENDCMP
-#
-#End Doc Library

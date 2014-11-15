@@ -10,8 +10,8 @@ void SerialDebug_printByteArray(uint8_t* arrayData, uint16_t arraySize);
 
 #else
 
-#define SerialDebug_init()	0
-#define SerialDebug_printf(...)	0
-#define SerialDebug_printByteArray(arrayData, arraySize) 0
+#define SerialDebug_init()
+#define SerialDebug_printf(...)
+#define SerialDebug_printByteArray(arrayData, arraySize)
 
 #endif
